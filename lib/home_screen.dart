@@ -1,6 +1,6 @@
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pmsn_2025_2/utils/value_listener.dart';
+import 'package:pmsn_2025_2/practica1/home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,77 +12,83 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   _SelectedTab _selectedTab = _SelectedTab.home;
 
-  void _handleIndexChanged(int i) {
+  void _onTabChanged(int index) {
     setState(() {
-      _selectedTab = _SelectedTab.values[i];
+      _selectedTab = _SelectedTab.values[index];
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final pages = <Widget>[
+      const Center(child: Text('Inicio')),
+      const Center(child: Text('Favoritos')),
+      const Center(child: Text('Buscar')),
+      const Center(child: Text('Perfil')),
+    ];
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-
+        title: const Text('Mi App'),
         actions: [
-          ValueListenableBuilder(
+          ValueListenableBuilder<bool>(
             valueListenable: ValueListener.isDark,
-            builder: (context, value, child) {
-              return value
-                  ? IconButton(
-                      icon: Icon(Icons.nightlight_round),
-                      onPressed: () {
-                        // Cambiar a tema oscuro
-                        ValueListener.isDark.value = false;
-                      },
-                    )
-                  : IconButton(
-                      icon: Icon(Icons.wb_sunny_rounded),
-                      onPressed: () {
-                        // Cambiar a tema claro
-                        ValueListener.isDark.value = true;
-                      },
-                    );
+            builder: (context, isDark, child) {
+              return IconButton(
+                icon: Icon(isDark ? Icons.nightlight_round : Icons.wb_sunny_rounded),
+                onPressed: () => ValueListener.isDark.value = !isDark,
+              );
             },
           ),
         ],
       ),
-      drawer: Drawer(),
-      body: Center(child: Text('Menu de opciones')),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 100),
-        child: DotNavigationBar(
-          margin: EdgeInsets.only(left: 10, right: 10),
+
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text(
+                'Menú de Opciones',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.school, color: Colors.green),
+              title: const Text('Práctica 1'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el Drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+
+      body: SafeArea(
+        child: IndexedStack(
+          index: _SelectedTab.values.indexOf(_selectedTab),
+          children: pages,
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _SelectedTab.values.indexOf(_selectedTab),
-          dotIndicatorColor: Colors.white,
-          unselectedItemColor: Colors.grey[300],
-          splashBorderRadius: 50,
-          // enableFloatingNavBar: false,
-          onTap: _handleIndexChanged,
-          items: [
-            /// Home
-            DotNavigationBarItem(
-              icon: Icon(Icons.home),
-              selectedColor: Color(0xff73544C),
-            ),
-
-            /// Likes
-            DotNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              selectedColor: Color(0xff73544C),
-            ),
-
-            /// Search
-            DotNavigationBarItem(
-              icon: Icon(Icons.search),
-              selectedColor: Color(0xff73544C),
-            ),
-
-            /// Profile
-            DotNavigationBarItem(
-              icon: Icon(Icons.person),
-              selectedColor: Color(0xff73544C),
-            ),
+          onTap: _onTabChanged,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoritos'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
           ],
         ),
       ),

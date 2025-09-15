@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-// import 'package:pmsn_2025_2/home_screen.dart';
+
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,24 +59,38 @@ class _LoginScreenState extends State<LoginScreen> {
               child:Container(
                 padding: EdgeInsets.symmetric(horizontal: 80),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.27,
+                height: MediaQuery.of(context).size.height*0.32,
                 decoration: BoxDecoration(
                        color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     txtUser,
                     txtPassword,
-                    IconButton(onPressed: () {
+                    IconButton(
+                      tooltip: 'Iniciar sesión',
+                      onPressed: () {
                       isValidating = true;
                       setState(() {});
                       Future.delayed(Duration(milliseconds: 2000)).then((value) =>
                       Navigator.pushNamed(context, "/home"));
-
                     },
-                    icon: Icon(Icons.login,size:40,)
-                    )
+                    icon: Icon(Icons.login,size:40,),
+                    
+                    ),
+                    const SizedBox(height: 8),
+                    IconButton(
+                      tooltip: 'Registrarse',
+                      icon: const Icon(Icons.person_add, color: Colors.blue, size: 40),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

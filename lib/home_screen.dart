@@ -49,25 +49,35 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text(
-                'Menú de Opciones',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+            UserAccountsDrawerHeader(
+              accountName: Text("Josue Julian Nunez Perez"),
+              accountEmail: Text("juliannunez@example.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(  'https://i.pravatar.cc/300'),
               ),
             ),
 
             ListTile(
               leading: const Icon(Icons.school, color: Colors.green),
               title: const Text('Práctica 1'),
+              subtitle: const Text('Reto de flutter de personajes'),
               onTap: () {
-                Navigator.pop(context); // Cierra el Drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Home()),
-                );
+              Navigator.pop(context); // Cierra el Drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              );
               },
             ),
+            ListTile(
+              leading: Icon(Icons.movie, ),
+              title: Text('List Movies'),
+              subtitle: Text('Database Movies'),
+              trailing: Icon(Icons.chevron_right, size: 16),
+              onTap: () => {
+                Navigator.pushNamed(context, "/listdb"),
+              },
+            )
           ],
         ),
       ),

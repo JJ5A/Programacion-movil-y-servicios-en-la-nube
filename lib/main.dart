@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pmsn_2025_2/home_screen.dart';
 import 'package:pmsn_2025_2/login_screen.dart';
+import 'package:pmsn_2025_2/utils/list_movies.dart';
 import 'package:pmsn_2025_2/utils/theme_app.dart';
 import 'package:pmsn_2025_2/utils/value_listener.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
           theme: isDark ? ThemeApp.darkTheme() : ThemeApp.lightTheme(),
           routes: {
             "/home": (context) => HomeScreen(),
+            "/listdb": (context) => ListMovies(),
           },
           title: 'Material App',
           home: LoginScreen(),

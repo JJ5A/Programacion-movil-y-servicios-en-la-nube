@@ -37,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
             valueListenable: ValueListener.isDark,
             builder: (context, isDark, child) {
               return IconButton(
-                icon: Icon(isDark ? Icons.nightlight_round : Icons.wb_sunny_rounded),
+                icon: Icon(
+                  isDark ? Icons.nightlight_round : Icons.wb_sunny_rounded,
+                ),
                 onPressed: () => ValueListener.isDark.value = !isDark,
               );
             },
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               accountName: Text("Josue Julian Nunez Perez"),
               accountEmail: Text("juliannunez@example.com"),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(  'https://i.pravatar.cc/300'),
+                backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
               ),
             ),
 
@@ -62,22 +64,27 @@ class _HomeScreenState extends State<HomeScreen> {
               title: const Text('Práctica 1'),
               subtitle: const Text('Reto de flutter de personajes'),
               onTap: () {
-              Navigator.pop(context); // Cierra el Drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Home()),
-              );
+                Navigator.pop(context); // Cierra el Drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
               },
             ),
             ListTile(
-              leading: Icon(Icons.movie, ),
+              leading: Icon(Icons.movie),
               title: Text('List Movies'),
               subtitle: Text('Database Movies'),
               trailing: Icon(Icons.chevron_right, size: 16),
-              onTap: () => {
-                Navigator.pushNamed(context, "/listdb"),
-              },
-            )
+              onTap: () => {Navigator.pushNamed(context, "/listdb")},
+            ),
+            ListTile(
+              leading: Icon(Icons.draw, color: Colors.purple),
+              title: Text('Practica 3'),
+              subtitle: Text('Pantallas de figma a replicar'),
+              trailing: Icon(Icons.chevron_right, size: 16),
+              onTap: () => {Navigator.pushNamed(context, "/splash")},
+            ),
           ],
         ),
       ),
@@ -96,7 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: _onTabChanged,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoritos'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favoritos',
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
           ],

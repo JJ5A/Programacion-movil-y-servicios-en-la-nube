@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pmsn_2025_2/add_movie_screen.dart';
 import 'package:pmsn_2025_2/home_screen.dart';
 import 'package:pmsn_2025_2/login_screen.dart';
+import 'package:pmsn_2025_2/practica2/Splash_screen.dart';
 import 'package:pmsn_2025_2/utils/list_movies.dart';
 import 'package:pmsn_2025_2/utils/theme_app.dart';
 import 'package:pmsn_2025_2/utils/value_listener.dart';
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
           routes: {
             "/home": (context) => HomeScreen(),
             "/listdb": (context) => ListMovies(),
+            "/splash": (context) => const SplashScreen(),
+            "/add" : (context)=> const AddMovieScreen(),
           },
           title: 'Material App',
           home: LoginScreen(),

@@ -76,6 +76,7 @@ flutter:
     - assets/images/velocidad.png
     - assets/images/ataque.png
     - assets/images/elixir.png
+    - assets/practica3/splash.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

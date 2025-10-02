@@ -77,6 +77,9 @@ flutter:
     - assets/images/ataque.png
     - assets/images/elixir.png
     - assets/practica3/splash.png
+    - assets/practica3/google.png
+    - assets/practica3/facebook.png
+    - assets/practica3/house.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -94,6 +97,8 @@ flutter:
     - family: Schyler
       fonts:
         - asset: fonts/MotionPicture_PersonalUseOnly.ttf
+          style: italic
+        - asset: fonts/Montserrat.ttf
           style: italic
   #   - family: Trajan Pro
   #     fonts:

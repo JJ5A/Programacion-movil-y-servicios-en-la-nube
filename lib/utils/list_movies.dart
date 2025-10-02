@@ -25,7 +25,10 @@ class _ListMoviesState extends State<ListMovies> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/add").then((value) => setState(() {}));
+              Navigator.pushNamed(
+                context,
+                "/add",
+              ).then((value) => setState(() {}));
             },
             icon: Icon(Icons.add_sharp),
           ),
@@ -44,14 +47,36 @@ class _ListMoviesState extends State<ListMovies> {
               return data.isEmpty
                   ? Center(child: Text("No hay datos"))
                   : ListView.builder(
-                      itemCount: data.length,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         final objM = data[index];
                         return Container(
+                          height: 100,
                           color: Colors.black,
-                          child: Text(
-                            objM.nameMovie ?? '',
-                            style: TextStyle(color: Colors.white),
+                          child: Column(
+                            children: [
+                              Text(objM.nameMovie!),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.edit),
+                                  ),
+                                  //Expanded(child: Container()),
+                                  IconButton(
+                                    onPressed: () async {
+                                      return showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            _buildAlertDialog(),
+                                      );
+                                    },
+                                    icon: Icon(Icons.delete),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         );
                       },
@@ -62,6 +87,22 @@ class _ListMoviesState extends State<ListMovies> {
           }
         },
       ),
+    );
+  }
+
+  Widget _buildAlertDialog() {
+    return AlertDialog(
+      title: Text("Eliminar"),
+      content: Text("¿Está seguro de eliminar este registro?"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancelar"),
+        ),
+        ElevatedButton(onPressed: () {}, child: Text("Aceptar")),
+      ],
     );
   }
 }

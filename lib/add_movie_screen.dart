@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pmsn_2025_2/database/movies.dart';
+import 'dart:math';
 
 class AddMovieScreen extends StatefulWidget {
   const AddMovieScreen({super.key});
@@ -9,71 +10,83 @@ class AddMovieScreen extends StatefulWidget {
 }
 
 class _AddMovieScreenState extends State<AddMovieScreen> {
-  MoviesDatabase? moviesDb;
+ 
+  MoviesDatabase? moviesDB;
   DateTime selectedDate = DateTime.now();
   TextEditingController conTitle = TextEditingController();
   TextEditingController conTime = TextEditingController();
   TextEditingController conRelease = TextEditingController();
-
+  
   @override
   void initState() {
     super.initState();
-    moviesDb = MoviesDatabase();
+    moviesDB = MoviesDatabase();
   }
 
   @override
   Widget build(BuildContext context) {
-    conRelease.text = selectedDate.toLocal().toString().split(' ')[0];
 
+    conRelease.text = selectedDate.toString();
+   
     final txtTitle = TextFormField(
       controller: conTitle,
-      decoration: InputDecoration(hintText: "Titulo de la pelicula."),
+      decoration: InputDecoration(
+        hintText: "Título de la película"
+      ),
     );
 
     final txtTime = TextFormField(
       controller: conTime,
-      decoration: InputDecoration(hintText: "Duracion de la pelicula"),
+      decoration: InputDecoration(
+        hintText: "Duración de la película"
+      ),
     );
 
     final txtRelease = TextFormField(
-      onTap: () => _selectedDate(context),
       controller: conRelease,
-      decoration: InputDecoration(hintText: "Fecha de lanzamiento"),
+      onTap: ()=>_selectedDate(context),
+      decoration: InputDecoration(
+        hintText: "Fecha de lanzamiento"
+      ),
     );
 
     final btnGuardar = ElevatedButton(
-      onPressed: () {
-        moviesDb!
-            .INSERT('tblMovies', {
-              'nameMovie': conTitle.text,
-              'time': conTime.text,
-              'dateRelease': conRelease.text,
-            })
-            .then((value) => Navigator.pop(context),);
-      },
-      child: Text("Guardar"),
+      onPressed: (){
+        moviesDB!.INSERT("tblMovies", {
+          "nameMovie" : conTitle.text,
+          "time" : conTime.text,
+          "dateRelease" : conRelease.text 
+        }).then((value) => Navigator.pop(context),);
+      }, 
+      child: Text("Guardar")
     );
 
     return Scaffold(
-      appBar: AppBar(title: Text("Insertar pelicula")),
+      appBar: AppBar(title: const Text('Insertar película'),),
       body: ListView(
         shrinkWrap: true,
-        children: [txtTitle, txtTime, txtRelease, btnGuardar],
+        children: [
+          txtTitle,
+          txtTime,
+          txtRelease,
+          btnGuardar
+        ],
       ),
     );
   }
 
   _selectedDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-      context: context,
+      context: context, 
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      firstDate: DateTime(2000), 
+      lastDate: DateTime(2030)
     );
-    if (picked != null && picked != selectedDate) {
+    if( picked != null && picked != selectedDate ){
       setState(() {
         selectedDate = picked;
       });
     }
   }
+
 }
